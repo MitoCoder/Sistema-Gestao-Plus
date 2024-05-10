@@ -137,7 +137,7 @@ const App = () => {
 
   const [valortotal, setvalortotal] = useState(values.valortotal);
 
-  // API de Busca de Endereço de Instalação
+  // API de Busca de Endereço de Instalação Geral
   function instalacaoCEP() {
     if (cep) {
       axios
