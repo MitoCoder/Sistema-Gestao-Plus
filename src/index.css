@@ -1,0 +1,22 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+.ant-tabs-tab {
+  color: rgb(187, 187, 187) !important;
+}
+.ant-tabs-ink-bar {
+  background-color: rgb(119, 119, 119) !important;
+}
+.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: white !important;
+}
