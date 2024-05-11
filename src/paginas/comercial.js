@@ -1,11 +1,19 @@
 import React, { useState } from "react";
 import { Col, Row } from "antd";
-import { Input, Button, Tabs, Select, InputNumber, Popconfirm } from "antd";
+import {
+  Input,
+  Tabs,
+  Select,
+  InputNumber,
+  Popconfirm,
+  FloatButton,
+} from "antd";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import axios from "axios";
 import { Typography } from "antd";
 import { saveAs } from "file-saver";
+import { FilePdfOutlined, DeleteOutlined } from "@ant-design/icons";
 const { Title } = Typography;
 
 const { TabPane } = Tabs;
@@ -473,10 +481,20 @@ const App = () => {
     //Campos de Textos Diversos vou melhorar e arrumar essa bagunça
     <Tabs defaultActiveKey="1" centered>
       <TabPane tab="Dados de Entrega" key="1">
-        <Title level={3} style={{ color: "white" }}>
+        <Title
+          level={3}
+          style={{ color: "white", textAlign: "center", marginBottom: "40px" }}
+        >
           Entrega: Mandou bem! agora vamos a Logistica.
         </Title>
-        <Row gutter={16} style={{ display: "flex", alignItems: "flex-start" }}>
+        <Row
+          gutter={16}
+          style={{
+            display: "flex",
+            alignItems: "flex-start",
+            justifyContent: "center",
+          }}
+        >
           <Col xs={24} md={8} lg={8}>
             <div
               style={{
@@ -557,72 +575,73 @@ const App = () => {
                 onChange={(e) => setEnderecoinst(e.target.value)}
               />
             </div>
-          </Col>
-          <Col xs={24} md={8} lg={8}>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-start",
-              }}
-            ></div>
+            {/* Imagem e nova coluna horizontal */}
             <div
               style={{
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
+                justifyContent: "center",
               }}
             >
-              <span style={{ marginBottom: "10px" }}></span>
-              <img src="/imagens/entrega.png" alt="" width="160" height="100" />
-            </div>
-
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                selectdjustify: "space-evenly",
-                alignItems: "center",
-                gap: "2px", // Espaçamento vertical entre os elementos
-              }}
-            >
-              <div style={{ marginTop: "1px" }}>
-                Selecione um produto antes de criar a Guia de Entrega!
-              </div>
-
               <div>
-                <Popconfirm
-                  title="Deseja Limpar Form. Entrega?"
-                  onConfirm={handleLimparInput}
-                  onCancel={handleCancelarLimpar}
-                  okText="Sim"
-                  cancelText="Não"
-                  visible={limparModalVisible}
+                <FloatButton.Group
+                  shape="circle"
+                  style={{
+                    right: 24,
+                  }}
                 >
-                  <Button danger onClick={() => setLimparModalVisible(true)}>
-                    Limpar - Form. Entrega
-                  </Button>
-                </Popconfirm>
-
-                <Button
-                  type="primary"
-                  onClick={gerarPDF}
-                  disabled={!algumProdutoSelecionado}
-                  style={{ marginLeft: "10px" }}
-                >
-                  Finalizar Form. Entrega
-                </Button>
+                  <Popconfirm
+                    title="Deseja Limpar Form. Entrega?"
+                    onConfirm={handleLimparInput}
+                    onCancel={handleCancelarLimpar}
+                    okText="Sim"
+                    cancelText="Não"
+                    visible={limparModalVisible}
+                  >
+                    <FloatButton
+                      icon={<DeleteOutlined style={{ color: "red" }} />}
+                      tooltip="Limpar Form. Entrega"
+                      onClick={() => setLimparModalVisible(true)}
+                    />
+                  </Popconfirm>
+                  <FloatButton
+                    icon={
+                      <FilePdfOutlined
+                        style={{
+                          color: algumProdutoSelecionado ? "green" : "red",
+                        }}
+                      />
+                    }
+                    tooltip={
+                      algumProdutoSelecionado
+                        ? "Finalizar Form. Entrega"
+                        : "Selecione o Produto!"
+                    }
+                    onClick={algumProdutoSelecionado ? gerarPDF : null}
+                    disabled={!algumProdutoSelecionado} // Desabilitado quando nenhum produto estiver selecionado
+                  />
+                </FloatButton.Group>
               </div>
             </div>
           </Col>
         </Row>
       </TabPane>
-
       <TabPane tab="Contatos e Observações" key="2">
-        <Title level={3} style={{ color: "white" }}>
+        <Title
+          level={3}
+          style={{ color: "white", textAlign: "center", marginBottom: "40px" }}
+        >
           Contatos e Informações: Emissão da Guia de Entrega
         </Title>
-        <Row gutter={10} style={{ display: "flex", alignItems: "flex-start" }}>
+        <Row
+          gutter={10}
+          style={{
+            jdisplay: "flex",
+            alignItems: "flex-start",
+            justifyContent: "center",
+          }}
+        >
           <Col xs={24} md={8} lg={8}>
             <div>
               <span style={{ color: "white", marginBottom: "2px" }}>
@@ -697,32 +716,14 @@ const App = () => {
               />
             </div>
           </Col>
-
-          <Col xs={24} md={8} lg={8}>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <span style={{ marginBottom: "10px" }}></span>
-              <img
-                src="/imagens/entrega2.png"
-                alt=""
-                width="230"
-                height="150"
-              />
-              <div style={{ marginTop: "1px" }}>
-                Dica do Guru: Observações ajudam a facilitar a Entrega!
-              </div>
-            </div>
-          </Col>
         </Row>
       </TabPane>
 
       <TabPane tab="Produtos" key="3">
-        <Title level={3} style={{ color: "white", textAlign: "center" }}>
+        <Title
+          level={3}
+          style={{ color: "white", textAlign: "center", marginBottom: "40px" }}
+        >
           Seleção dos Produtos: Emissão da Guia de Entrega
         </Title>
 
