@@ -18,7 +18,7 @@ import {
   BgColorsOutlined,
 } from "@ant-design/icons";
 import ptBR from "antd/lib/locale/pt_BR";
-import ComercialForm from "./paginas/comercial"; // Importe o componente do formulário ComercialForm
+import EntregaForm from "./paginas/entrega"; // Importe o componente do formulário EntregaForm
 
 const { Header, Sider, Content } = Layout;
 
@@ -133,25 +133,30 @@ const App = () => {
               <Menu.Item
                 key="1"
                 icon={<AppstoreOutlined />}
-                style={
-                  clickedMenuItem === "1"
-                    ? { backgroundColor: "rgba(255, 255, 255, 0.1)" }
-                    : { color: "#fff" }
-                }
+                style={{
+                  backgroundColor: clickedMenuItem === "1" ? color : null,
+                  color: clickedMenuItem === "1" ? "#fff" : null,
+                }}
               >
                 <Link to="/home">Home</Link>
               </Menu.Item>
-              <Menu.Item
-                key="2"
+              <Menu.SubMenu
+                key="comercial"
+                title="Comercial"
                 icon={<AuditOutlined />}
-                style={
-                  clickedMenuItem === "2"
-                    ? { backgroundColor: "rgba(255, 255, 255, 0.1)" }
-                    : { color: "#fff" }
-                }
+                style={{ backgroundColor: color }}
               >
-                <Link to="/comercial">Comercial</Link>
-              </Menu.Item>
+                <Menu.Item
+                  key="entrega"
+                  style={{
+                    backgroundColor:
+                      clickedMenuItem === "entrega" ? color : null,
+                    color: clickedMenuItem === "entrega" ? "#fff" : null,
+                  }}
+                >
+                  <Link to="/comercial/entrega">Entrega</Link>
+                </Menu.Item>
+              </Menu.SubMenu>
             </Menu>
           </Sider>
           <Layout className="site-layout">
@@ -164,16 +169,14 @@ const App = () => {
                 background: color,
                 borderRadius: "10px",
                 color: "#fff",
-                position: "relative", // Adicionando position: relative para o Content
+                position: "relative",
               }}
             >
               <Routes>
                 <Route path="/home">Home</Route>
-                <Route path="/comercial" element={<ComercialForm />} />{" "}
-                {/* Renderize ComercialForm aqui */}
+                <Route path="/comercial/entrega" element={<EntregaForm />} />
               </Routes>
 
-              {/* FloatButton movido para dentro do Content */}
               <Popover
                 placement="bottom"
                 content={colorPickerContent}
@@ -187,7 +190,7 @@ const App = () => {
                   style={{
                     position: "absolute",
                     bottom: 31,
-                    left: 21, // Definindo o FloatButton à esquerda
+                    left: 21,
                     boxShadow: "0px 8px 8px rgba(0, 0, 0, 0.8)",
                   }}
                   onClick={() => setColorPickerVisible(true)}
